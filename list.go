@@ -31,11 +31,6 @@ func NewList(values ...interface{}) List {
 // overall list.
 func newListNode(index int, value interface{}, children ...interface{}) ListNode {
 	return func(f interface{}) interface{} {
-		// Check no more children
-		if len(children) == 0 {
-			return nil // Stop execution
-		}
-
 		// Inputted parameter is an integer
 		if i, ok := f.(int); ok {
 			if i == index {
@@ -48,7 +43,12 @@ func newListNode(index int, value interface{}, children ...interface{}) ListNode
 			i(index, value) // Call the iterator
 		}
 
-		return newListNode(index+1, children[0], children[1:])(f) // Do for the rest of the nodes
+		// Check no more children
+		if len(children) == 0 {
+			return nil // Stop execution
+		}
+
+		return newListNode(index+1, children[0], children[1:]...)(f) // Do for the rest of the nodes
 	} // Return the list node
 }
 
