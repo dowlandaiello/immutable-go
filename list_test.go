@@ -3,7 +3,6 @@
 package immutable
 
 import (
-	"math/rand"
 	"testing"
 )
 
@@ -22,20 +21,12 @@ func TestNewList(t *testing.T) {
 	}
 }
 
-/* END EXPORTED METHODS TESTS */
-
-/* BEGIN INTERNAL METHODS */
-
-// generateTestData generates a slice of test strings.
-func generateTestData(n int) []testData {
-	var t []testData // The test data
-
-	// Make n ints
-	for i := 0; i < n; i++ {
-		t = append(t, testData{rand.Intn(69)}) // Add the test integer to the test data slice
+// TestGet tests the functionality of the NewList get functionality.
+func TestGet(t *testing.T) {
+	list := NewList(69, 420, 666)                          // Put 2 elements in a new list
+	if list(0) != 69 || list(1) != 420 || list(2) != 666 { // Check last element in the list is not equivalent to the actual last item
+		t.Fatal("invalid list data") // Panic
 	}
-
-	return t // Return the test data
 }
 
-/* END INTERNAL METHODS */
+/* END EXPORTED METHODS TESTS */

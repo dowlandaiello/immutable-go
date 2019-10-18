@@ -20,11 +20,6 @@ func NewList(values ...interface{}) List {
 	return newListNode(0, values[0], values[1:]...) // Return the list
 }
 
-// NewListFromSlice initializes a new list from the given values.
-func NewListFromSlice(values []interface{}) List {
-	return NewList(values...) // Return the new list
-}
-
 /* END EXPORTED METHODS */
 
 /* BEGIN INTERNAL METHODS */
