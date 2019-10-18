@@ -6,7 +6,7 @@ package immutable
 type List = ListNode
 
 // Iterator if a generic method used to meaningfully traverse a list.
-type Iterator = func(index int, value interface{})
+type Iterator = func(index int, value interface{}) interface{}
 
 // ListNode is a node in a list.
 type ListNode func(interface{}) interface{}
@@ -23,6 +23,18 @@ func NewList(values ...interface{}) List {
 	return newListNode(0, values[0], values[1:]...) // Return the list
 }
 
+// Size gets the size of the list.
+func (l *List) Size() int {
+	return (*l)(func(index int, value interface{}) interface{} {
+		return index + 1 // Return the index
+	}).(int) // Return the size of the list
+}
+
+// Push pushes an item to the list
+func (l *List) Push(e interface{}) List {
+
+}
+
 /* END EXPORTED METHODS */
 
 /* BEGIN INTERNAL METHODS */
@@ -36,19 +48,22 @@ func newListNode(index int, value interface{}, children ...interface{}) ListNode
 			if i == index {
 				return value // Return the value of the node
 			}
+		} else if i, ok := f.(Iterator); ok {
+			if r := i(index, value); len(children) == 0 { // Check no more children
+				return r // Return the result of the iterator
+			}
 		}
 
-		// Inputted parameter is an iterator
-		if i, ok := f.(Iterator); ok {
-			i(index, value) // Call the iterator
-		}
+		var nextChildren []interface{} = nil // The children passed into the next iteration
 
 		// Check no more children
 		if len(children) == 0 {
 			return nil // Stop execution
+		} else if len(children) > 1 {
+			nextChildren = children[1:] // Has next children
 		}
 
-		return newListNode(index+1, children[0], children[1:]...)(f) // Do for the rest of the nodes
+		return newListNode(index+1, children[0], nextChildren...)(f) // Do for the rest of the nodes
 	} // Return the list node
 }
 

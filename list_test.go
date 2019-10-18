@@ -29,4 +29,12 @@ func TestGet(t *testing.T) {
 	}
 }
 
+// TestSize tests the Size list helper method.
+func TestSize(t *testing.T) {
+	list := NewList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9) // Make a new list with 10 integers
+	if i := list.Size(); i != 10 {                // Check more than 10 integers in the list
+		t.Fatalf("invalid list size; expected %d, got %d", 10, i) // Panic
+	}
+}
+
 /* END EXPORTED METHODS TESTS */
