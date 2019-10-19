@@ -23,9 +23,40 @@ func TestNewList(t *testing.T) {
 
 // TestGet tests the functionality of the NewList get functionality.
 func TestGet(t *testing.T) {
-	list := NewList(69, 420, 666)                          // Put 2 elements in a new list
+	list := NewList(69, 420, 666)                          // Put 3 elements in a new list
 	if list(0) != 69 || list(1) != 420 || list(2) != 666 { // Check last element in the list is not equivalent to the actual last item
 		t.Fatal("invalid list data") // Panic
+	}
+}
+
+// TestForEach tests the functionality of the ForEach helper method.
+func TestForEach(t *testing.T) {
+	i := 0 // The iterator
+
+	list := NewList(1, 2, 3, 4) // Put 4 items in a new list
+	list.ForEach(func(index int, value interface{}) {
+		i++ // Increment i
+	})
+
+	// Should have been incremented 4 times
+	if i != 4 {
+		t.Fatal("callback should have been run 4 times") // Panic
+	}
+}
+
+// TestPush tests the functionality of the Push helper method.
+func TestPush(t *testing.T) {
+	list := NewList(1, 2, 3)  // Put 3 elements in a new list
+	if list.Push(4)(3) != 4 { // Check last element not added to list
+		t.Fatal("element should have been added to list") // Panic
+	}
+}
+
+// TestPop tests the functionality of the Pop helper method.
+func TestPop(t *testing.T) {
+	list := NewList(1, 2, 3, 4) // Put 4 elements in a new list
+	if list.Pop()(2) != 3 {     // Check last element not added to list
+		t.Fatal("element should have been popped from list") // Panic
 	}
 }
 
