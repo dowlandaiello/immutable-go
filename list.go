@@ -61,11 +61,16 @@ func makeList(index int, list List, elements ...interface{}) List {
 			panic("index out of bounds") // Panic
 		}
 
+		// Iterate through the provided callbacks
+		for _, cb := range callback {
+			cb(index, elements[0]) // Run the callback
+		}
+
 		if i == index { // Check is node being addressed
 			return elements[0] // Return the element
 		}
 
-		return list(i) // Return the element at that index elsewhere in the list
+		return list(i, callback...) // Return the element at that index elsewhere in the list
 	}
 
 	// Check is done constructing the list

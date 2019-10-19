@@ -40,7 +40,7 @@ func TestForEach(t *testing.T) {
 
 	// Should have been incremented 4 times
 	if i != 4 {
-		t.Fatal("callback should have been run 4 times") // Panic
+		t.Fatalf("callback should have been run 4 times; ran %d times instead", i) // Panic
 	}
 }
 
