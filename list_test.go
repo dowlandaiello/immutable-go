@@ -34,13 +34,25 @@ func TestForEach(t *testing.T) {
 	i := 0 // The iterator
 
 	list := NewList(1, 2, 3, 4) // Put 4 items in a new list
-	list.ForEach(func(index int, value interface{}) {
+	list.ForEach(func(index int, value interface{}) interface{} {
 		i++ // Increment i
+
+		return nil // Nothing to return
 	})
 
 	// Should have been incremented 4 times
 	if i != 4 {
 		t.Fatalf("callback should have been run 4 times; ran %d times instead", i) // Panic
+	}
+}
+
+// TestSet tests the functionality of the Set helper method.
+func TestSet(t *testing.T) {
+	list := NewList(1, 2, 3, 4) // Put 4 items in a new list
+	l1 := list.Set(2, 5)        // Set the 3rd index to 5
+
+	if l1(0) != 1 || l1(1) != 2 || l1(2) != 5 || l1(3) != 4 { // Ensure item at 3rd index was set to 5
+		t.Fatal("item should have been set") // Panic
 	}
 }
 
@@ -55,7 +67,7 @@ func TestPush(t *testing.T) {
 // TestPop tests the functionality of the Pop helper method.
 func TestPop(t *testing.T) {
 	list := NewList(1, 2, 3, 4) // Put 4 elements in a new list
-	if list.Pop()(2) != 3 {     // Check last element not added to list
+	if list.Pop().Size() != 3 { // Check last element not added to list
 		t.Fatal("element should have been popped from list") // Panic
 	}
 }
