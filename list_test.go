@@ -3,6 +3,7 @@
 package immutable
 
 import (
+	"math/rand"
 	"testing"
 )
 
@@ -23,9 +24,11 @@ func TestNewList(t *testing.T) {
 
 // TestGet tests the functionality of the NewList get functionality.
 func TestGet(t *testing.T) {
-	list := NewList(69, 420, 666)                          // Put 3 elements in a new list
-	if list(0) != 69 || list(1) != 420 || list(2) != 666 { // Check last element in the list is not equivalent to the actual last item
-		t.Fatal("invalid list data") // Panic
+	list := NewList(0) // Put 1 element in a new list
+
+	for i := 1; i < 10000000; i++ {
+		list = list.Push(rand.Intn(420)) // Add a random int to the list
+		list(i)                          // Get the item at the index
 	}
 }
 
